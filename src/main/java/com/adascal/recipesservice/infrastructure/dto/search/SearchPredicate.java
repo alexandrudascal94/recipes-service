@@ -60,7 +60,7 @@ public enum SearchPredicate {
     EXCLUDE {
         @Override
         public Criteria mapCriteria(Criteria criteria, String value) {
-            return criteria.elemMatch(Criteria.where("name").ne(value));
+            return criteria.not().elemMatch(Criteria.where("name").is(value));
         }
     },
     CONTAINS_TEXT {

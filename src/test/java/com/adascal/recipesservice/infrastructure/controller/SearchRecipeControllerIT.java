@@ -7,7 +7,6 @@ import com.adascal.recipesservice.infrastructure.dto.RecipeResponse;
 import com.adascal.recipesservice.infrastructure.dto.search.SearchPredicate;
 import com.adascal.recipesservice.infrastructure.dto.search.SearchQuery;
 import com.adascal.recipesservice.infrastructure.dto.search.SearchRequest;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletResponse;
 
@@ -127,8 +126,7 @@ public class SearchRecipeControllerIT extends AbstractBaseIT {
     }
 
     @Test
-    @Disabled
-    void search_without_ingredient_shouldReturn_recipesWithIngredient() throws Exception {
+    void search_without_ingredient_shouldReturn_recipesWithoutIngredient() throws Exception {
         recipeRepository.saveAll(createRecipes(USER_ID));
         var ingredient = "eggs";
         var search = SearchQuery.builder()
