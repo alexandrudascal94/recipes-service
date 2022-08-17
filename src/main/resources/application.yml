@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: recipes-service
+  data:
+    mongodb:
+      databse: recipes-service-db
+      host: mongo
+      port: 27017
+
+

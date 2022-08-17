@@ -1,0 +1,349 @@
+{
+	"info": {
+		"_postman_id": "57422952-7bd1-4a9c-9d28-93e35da99f73",
+		"name": "recipe service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get-recipe",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "1",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/v1/recipe/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"recipe",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete-recipe",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "1",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/v1/recipe/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"recipe",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post-recipe",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "1",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"patatoes with rosmary\",\n    \"description\": \"clean the potatoes, season with all condiments, bake in the oven at 220 C for 50 minutes\",\n    \"ingredients\": [\n        {\n            \"name\": \"potatoes\",\n            \"unit\": \"kg\",\n            \"count\": 0.5\n        },\n        {\n            \"name\": \"rosmary\",\n            \"unit\": \"pieces\",\n            \"count\": 3\n        },\n        {\n            \"name\": \"salt\",\n            \"unit\": \"g\",\n            \"count\": 5.0\n        },\n        {\n            \"name\": \"papper\",\n            \"unit\": \"g\",\n            \"count\": 5.0\n        },\n        {\n            \"name\": \"oil\",\n            \"unit\": \"ml\",\n            \"count\": 20.0\n        }\n    ],\n    \"servings\": 2,\n    \"preparationTime\": \"PT1H\",\n    \"isVegetarian\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/recipe",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"recipe"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post-recipe Invalid input",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "1",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Baked Potatoes 2\",\n    \"description\": \"clean the potatoes, season with all condiments, bake in the oven at 220 C for 45 minutes\",\n    \"ingredients\": [\n        {\n            \"name\": \"Potatoes\",\n            \"unit\": \"kg\",\n            \"count\": 0.5\n        },\n        {\n            \"name\": \"Salt\",\n            \"unit\": \"g\",\n            \"count\": 5.0\n        },\n        {\n            \"name\": \"Papper\",\n            \"unit\": \"g\",\n            \"count\": 5.0\n        },\n        {\n            \"name\": \"Oil\",\n            \"unit\": \"ml\",\n            \"count\": 20.0\n        }\n    ],\n    \"servings\": 2,\n    \"preparationTime\": \"PT1H\",\n    \"isVegetarian\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/recipe",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"recipe"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put-recipe",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "1",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Baked Potatoes\",\n    \"description\": \"clean the potatoes, season with all condiments, bake in the oven at 270 C for 40 minutes\",\n    \"ingredients\": [\n        {\n            \"name\": \"potatoes\",\n            \"unit\": \"kg\",\n            \"count\": 0.5\n        },\n        {\n            \"name\": \"salt\",\n            \"unit\": \"g\",\n            \"count\": 5.0\n        },\n        {\n            \"name\": \"papper\",\n            \"unit\": \"g\",\n            \"count\": 5.0\n        },\n        {\n            \"name\": \"oil\",\n            \"unit\": \"ml\",\n            \"count\": 20.0\n        }\n    ],\n    \"servings\": 2,\n    \"preparationTime\": \"PT20M\",\n    \"isVegetarian\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/recipe/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"recipe",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "search all vegetarian",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "1",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"criteria\": [\n        {\n            \"key\": \"isVegetarian\",\n            \"predicate\": \"EQUAL\",\n            \"value\": \"true\"\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/recipe/search",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"recipe",
+						"search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "search include patatoes and 2 servs",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "1",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"criteria\": [\n        {\n            \"key\": \"servings\",\n            \"predicate\": \"EQUAL\",\n            \"value\": \"2\"\n        }, \n        {\n            \"key\": \"ingredients\",\n            \"predicate\": \"INCLUDE\",\n            \"value\": \"potatoes\"\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/recipe/search",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"recipe",
+						"search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "search description has word water",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "1",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"criteria\": [\n        {\n            \"key\": \"description\",\n            \"predicate\": \"CONTAINS_TEXT\",\n            \"value\": \"water\"\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/recipe/search",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"recipe",
+						"search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "search all, no criteria",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "1",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"criteria\": [\n        \n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/recipe/search",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"recipe",
+						"search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "search multiple criteria",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "1",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"criteria\": [\n        {\n            \"key\": \"servings\",\n            \"predicate\": \"GREATER\",\n            \"value\": \"2\"\n        },\n        {\n            \"key\": \"ingredients\",\n            \"predicate\": \"INCLUDE\",\n            \"value\": \"pepper\"\n        },\n        {\n            \"key\": \"isVegetarian\",\n            \"predicate\": \"EQUAL\",\n            \"value\": \"false\"\n        },\n        {\n            \"key\": \"description\",\n            \"predicate\": \"CONTAINS_TEXT\",\n            \"value\": \"boil\"\n\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/recipe/search",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"recipe",
+						"search"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

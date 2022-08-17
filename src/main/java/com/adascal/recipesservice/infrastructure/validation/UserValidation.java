@@ -1,0 +1,19 @@
+package com.adascal.recipesservice.infrastructure.validation;
+
+import com.adascal.recipesservice.domain.exception.ErrorRule;
+import com.adascal.recipesservice.domain.exception.RecipeServiceException;
+import org.springframework.http.HttpHeaders;
+import org.springframework.web.bind.annotation.RequestHeader;
+
+import java.util.regex.Pattern;
+
+public class UserValidation {
+
+    private static final String USER_ID_PATTERN = "[a-zA-Z0-9]{1,10}";
+
+    public static void validateUserId(@RequestHeader(HttpHeaders.AUTHORIZATION) String userId) {
+        if (!Pattern.matches(USER_ID_PATTERN, userId)) {
+            throw new RecipeServiceException(ErrorRule.UNAUTHORIZED, "Invalid authentication credentials");
+        }
+    }
+}

@@ -1,0 +1,397 @@
+openapi: 3.0.2
+info:
+  version: '1.0.0'
+  title: Recipe Service API
+  description: |
+    This API contains endpoints to access recieps
+
+servers:
+  - url: http://localhost:8080
+
+paths:
+  '/v1/recipe/{id}':
+    get:
+      summary: Get a recipe.
+      description: |-
+        This endpoint will return a recipe for current user by recipe id
+      operationId: getRecipe
+      security:
+        - user_JWT: [ ]
+      tags:
+        - 'getRecipe'
+      responses:
+        200:
+          description: Recipe response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipeResponse'
+        "401":
+          description: |-
+            **Error Codes**
+            If JWT token is not valid. Error codes:
+            * `UNAUTHORIZED` - caller doesn't have valid authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        403:
+          description: |-
+            **Error Codes**
+            * `ACCESS_DENIED` - operation not allowed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: |-
+            **Error Codes**
+            * `RECIPE_NOT_FOUND` - no recipe was found for the given id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: |-
+            Internal server Error
+            **Error Codes**
+            * `TECHNICAL_ERROR` - technical error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      summary: Delete a recipe
+      description: |-
+        This endpoint will delete a recipe for current user by recipe id
+      operationId: deelteRecipe
+      security:
+        - user_JWT: [ ]
+      tags:
+        - 'deleteRecipe'
+      responses:
+        204:
+          description: Successfully deleted recipe.
+        "401":
+          description: |-
+            Error codes:
+            * `UNAUTHORIZED` - caller doesn't have valid authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: |-
+            Internal server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    put:
+      summary: Update a recipe.
+      description: |-
+        This endpoint will update the recipe for current user found by recipe id
+      operationId: UpdateRecipe
+      security:
+        - user_JWT: [ ]
+      tags:
+        - 'putRecipe'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RecipeRequest"
+      responses:
+        201:
+          description: Recipe successfully updated
+        400:
+          description: |-
+            Input validation Error
+
+            **Error Codes**
+            * `INVALID_INPUT`: request body is invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: |-
+            **Error Codes**
+            If JWT token is not valid. Error codes:
+            * `UNAUTHORIZED` - caller doesn't have valid authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "422":
+          description: |-
+            **Error Codes**
+            * `RECIPE_ALREADY_REGISTERED` - recipe with the same name already exists
+        "500":
+          description: |-
+            Internal server Error
+            **Error Codes**
+            * `TECHNICAL_ERROR` - technical error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  '/v1/recipe/':
+    post:
+      summary: Create a recipe.
+      description: |-
+        This endpoint will create a recipe for current user
+      operationId: CreateRecipe
+      security:
+        - user_JWT: [ ]
+      tags:
+        - 'postRecipe'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RecipeRequest"
+      responses:
+        201:
+          description: Recipe successfully created
+        400:
+          description: |-
+            Input validation Error
+
+            **Error Codes**
+            * `INVALID_INPUT`: request body is invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: |-
+            **Error Codes**
+            If JWT token is not valid. Error codes:
+            * `UNAUTHORIZED` - caller doesn't have valid authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "422":
+          description: |-
+            **Error Codes**
+            * `RECIPE_ALREADY_REGISTERED` - recipe with the same name already exists
+        "500":
+          description: |-
+            Internal server Error
+            **Error Codes**
+            * `TECHNICAL_ERROR` - technical error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  '/v1/recipe/search':
+    post:
+      summary: Search recipes.
+      description: |-
+        This endpoint can search recipes by different criteria. If no criteria are specified it will return all recipes.
+
+        *Operations*
+        * `EQUAL` - compare values
+        * `NOT_EQUAL` - comapre values
+        * `GREATER` - used to compare numbers
+        * `LESS` - used to compare numbers
+        * `CONTAINS_TEXT` - used for text search
+        * `NOT_CONTAINS_TEXT` - used for text search
+        * `INCLUDE` - used for ingredients
+        * `EXCLUDE` - used for ingredients
+      operationId: SearchRecipes
+      security:
+        - user_JWT: [ ]
+      tags:
+        - 'searchRecipe'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SearchRequest"
+      responses:
+        200:
+          description: Recipe that matches the criteria
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SearchResponse"
+        400:
+          description: |-
+            Input validation Error
+
+            **Error Codes**
+            * `INVALID_INPUT`: request body is invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: |-
+            **Error Codes**
+            If JWT token is not valid. Error codes:
+            * `UNAUTHORIZED` - caller doesn't have valid authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: |-
+            Internal server Error
+            **Error Codes**
+            * `TECHNICAL_ERROR` - technical error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+components:
+  schemas:
+    RecipeResponse:
+      type: object
+      properties:
+        title:
+          type: string
+          description: The title must be uniqie
+          maxLength: 50
+        description:
+          description: The recipe instructions
+          type: string
+        ingredients:
+          $ref: "#/components/schemas/Ingredients"
+        isVegetarian:
+          type: boolean
+          description: Boolean value if is vegetarian
+          default: false
+        servings:
+          type: number
+          description: Value must be greater then 0
+          default: 1
+          minimum: 1
+        duration:
+          type: string
+          description: time in minutes
+          example: PT25M -  represnets 25 minutes
+      required:
+        - title
+        - description
+        - ingredients
+        - isVegetarian
+        - servings
+        - duration
+    RecipeRequest:
+      type: object
+      title: PostRecipeResponse
+      properties:
+        title:
+          type: string
+          description: The title must be uniqie
+          maxLength: 50
+        description:
+          description: The recipe instructions
+          type: string
+        ingredients:
+          $ref: "#/components/schemas/Ingredients"
+        isVegetarian:
+          type: boolean
+          description: Boolean value if is vegetarian
+          default: false
+        servings:
+          type: number
+          description: Value must be greater then 0
+          default: 1
+          minimum: 1
+        duration:
+          type: string
+          description: time in minutes
+          example: PT25M - 25 minutes
+      required:
+        - title
+        - description
+        - ingredients
+        - isVegetarian
+        - servings
+        - duration
+    Ingredients:
+      type: object
+      title: Ingredients
+      properties:
+        name:
+          type: string
+          description: Ingredient name
+          maxLength: 50
+        count:
+          type: number
+          description: Ingredient quantity
+          minimum: 0
+        unit:
+          description: Unit of meassuer
+          example: g, kg, ml, pieces
+          type: string
+          maxLength: 50
+      required:
+        - name
+        - count
+        - unit
+    ErrorResponse:
+      type: object
+      title: Error response
+      description: The standard response model returned in case of an error
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: Error message
+      required:
+        - code
+        - message
+    SearchRequest:
+      type: object
+      title: SarchRequest
+      description: |-
+        The search request consist of a list of search query
+      properties:
+        criteria:
+          type: array
+          items:
+            $ref: "#/components/schemas/SearchQuery"
+    SearchQuery:
+      type: object
+      title: SearchQuery
+      description: The search criteria for on key/field
+
+      properties:
+        key:
+          type: string
+          description: Represnets the feild name
+          example: servings
+        predicate:
+          type: string
+          description: The operation to eb performed
+          example: GREATER
+        value:
+          type: string
+          example: 3
+          description: value to fullfill teh predicate against.
+
+    SearchResponse:
+      type: array
+      items:
+        $ref: "#/components/schemas/RecipeResponse"
+
+  securitySchemes:
+    user_JWT:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: |-
+        For simplicity the token consist only from plain text user id
