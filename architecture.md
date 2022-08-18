@@ -25,6 +25,9 @@ The downside of integration tests is that it loads the application context for e
 
 Unit tests are used mostly for smaller logics. In the case of this service was not applicable yet. 
 
+Current tests have coverage of  ~ 95%
+![img.png](img.png)
+
 # Error Responses
 In case of API calls error, the API will return error response that will contain short message and a code that gives more clarity together with the HTTP code, (e.g. 422 `RECIPE_ALREADY_EXISTS`)
 

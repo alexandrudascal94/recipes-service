@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class SearchRecipeControllerIT extends AbstractBaseIT {
 
     @Test
-    void search_with_noCriteria_should_ReturnAllRecipes() throws Exception {
+    void search_with_noCriteria_shouldReturn_allUsersRecipes() throws Exception {
         //given
         List<Recipe> recipes = createRecipes(USER_ID);
         recipeRepository.saveAll(recipes);
@@ -59,7 +59,7 @@ class SearchRecipeControllerIT extends AbstractBaseIT {
     }
 
     @Test
-    void search_allVegetarian_should_return_vegetarianRecipes() throws Exception {
+    void search_allVegetarian_shouldReturn_vegetarianRecipes() throws Exception {
         //given
         List<Recipe> recipes = createRecipes(USER_ID);
         recipeRepository.saveAll(recipes);
@@ -82,7 +82,7 @@ class SearchRecipeControllerIT extends AbstractBaseIT {
     }
 
     @Test
-    void search_allNonVegetarian_should_return_nonVegetarianRecipes() throws Exception {
+    void search_allNonVegetarian_shouldReturn_nonVegetarianRecipes() throws Exception {
         //given
         List<Recipe> recipes = createRecipes(USER_ID);
         recipeRepository.saveAll(recipes);
@@ -300,7 +300,7 @@ class SearchRecipeControllerIT extends AbstractBaseIT {
     }
 
     @Test
-    void search_when_invalidInput_greaterPredicate_should_return400() throws Exception {
+    void search_when_invalidInput_greater_should_return400() throws Exception {
         //given
         recipeRepository.saveAll(createRecipes(USER_ID));
         var servings = "two";
@@ -341,7 +341,7 @@ class SearchRecipeControllerIT extends AbstractBaseIT {
 
 
     @Test
-    void search_when_title_equal_should_returnTheRecipeWithThatTitle() throws Exception {
+    void search_when_title_equal_shouldReturn_theRecipeWithThatTitle() throws Exception {
         //given
         var recipes = createRecipes(USER_ID);
         recipeRepository.saveAll(recipes);
@@ -365,7 +365,7 @@ class SearchRecipeControllerIT extends AbstractBaseIT {
     }
 
     @Test
-    void search_when_title_notEqual_should_returnTheRecipeWithoutThatTitle() throws Exception {
+    void search_when_title_notEqual_shouldReturn_theRecipeWithoutThatTitle() throws Exception {
         //given
         List<Recipe> recipes = createRecipes(USER_ID);
         recipeRepository.saveAll(recipes);
@@ -390,8 +390,8 @@ class SearchRecipeControllerIT extends AbstractBaseIT {
     }
 
     @Test
-    void search_with_MultipleCriteria_should_ReturnRecipes() throws Exception {
-        //given
+    void search_with_multipleCriteria_shouldReturn_recipesMatchingAllCriteria() throws Exception {
+        //givens
         recipeRepository.saveAll(createRecipes(USER_ID));
         var ingredient = "salt";
         var descriptionText = "boil";
