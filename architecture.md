@@ -18,13 +18,15 @@ Because the service can have recipes from different users, the user must the aut
 a correct JWT that will contain all necessary information (AUTHORITIES, SUBJECT, ...). For simplicity no JWT validation or authorization is done. The JWT consist only of the plain user id text. 
 
 # Tests 
-The service contains mostly integration tests. Because the integration tests are more resilient to implementation changes(refactorings, adding nea feature). The interface API remains consistent as it's used by external services.
-With the integration tests it easily possible to cover many test scenarios 
+The service contains mostly integration tests. Because the integration tests are more resilient to implementation changes in the domain layer(refactorings, adding new features). The interface API remains consistent as it's used by external services.
+With the integration tests it easily possible to cover many test scenarios. In addition to that the user input data DTOs are mapped in the controllers so that the domain don't have any dependency to upper layers and contribute to domain logic resilience.
 
-Unit tests are used mostly for smaller logics. In the casse of this service was not applicable yet. 
+The downside of integration tests is that it loads the application context for each test, and it's time-consuming
+
+Unit tests are used mostly for smaller logics. In the case of this service was not applicable yet. 
 
 # Error Responses
-In case of API calls error, the API will return error response that will contain short message and a code that gives more clarity together with the HTTP code, (e.g. `RECIPE_ALREADY_EXISTS`)
+In case of API calls error, the API will return error response that will contain short message and a code that gives more clarity together with the HTTP code, (e.g. 422 `RECIPE_ALREADY_EXISTS`)
 
 # Searching
 For searching the service uses a POST request instead of a GET, because of the complexity of the search operations it's easier and cleaner to use POST with body in order to create the search criteria.

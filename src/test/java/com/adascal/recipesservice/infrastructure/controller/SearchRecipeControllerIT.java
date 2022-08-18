@@ -13,17 +13,17 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.adascal.recipesservice.factory.RecipeMother.INVALID_USER_ID;
-import static com.adascal.recipesservice.factory.RecipeMother.USER_ID;
-import static com.adascal.recipesservice.factory.RecipeMother.createRecipe;
-import static com.adascal.recipesservice.factory.RecipeMother.createRecipes;
-import static com.adascal.recipesservice.factory.TestRequestFactory.createSearchRecipeRequest;
+import static com.adascal.recipesservice.factory.RecipeObjectMother.INVALID_USER_ID;
+import static com.adascal.recipesservice.factory.RecipeObjectMother.USER_ID;
+import static com.adascal.recipesservice.factory.RecipeObjectMother.createRecipe;
+import static com.adascal.recipesservice.factory.RecipeObjectMother.createRecipes;
+import static com.adascal.recipesservice.factory.TestRecipeRequestFactory.createSearchRecipeRequest;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class SearchRecipeControllerIT extends AbstractBaseIT {
+class SearchRecipeControllerIT extends AbstractBaseIT {
 
     @Test
     void search_with_noCriteria_should_ReturnAllRecipes() throws Exception {
@@ -43,15 +43,17 @@ public class SearchRecipeControllerIT extends AbstractBaseIT {
 
     @Test
     void search_when_invalidUserId_should_return401() throws Exception {
+        //given
         var recipe = createAndSaveTestRecipe(USER_ID);
-
         var search = SearchQuery.builder()
                 .key("title")
                 .predicate(SearchPredicate.EQUAL)
                 .value(recipe.getTitle())
                 .build();
         var searchRequest = new SearchRequest(List.of(search));
+        //when
         mvc.perform(createSearchRecipeRequest(INVALID_USER_ID, objectMapper.writeValueAsString(searchRequest)))
+                //then
                 .andExpect(status().isUnauthorized())
                 .andExpect(jsonPath("$.code").value(ErrorRule.UNAUTHORIZED.name()));
     }
@@ -74,10 +76,9 @@ public class SearchRecipeControllerIT extends AbstractBaseIT {
                 .andReturn();
 
         RecipeResponse[] response = parseSearchResponse(result.getResponse());
-        System.out.println(response.length);
 
-        assertThat(recipes.stream().filter(r -> r.isVegetarian()).count()).isEqualTo(response.length);
-        assertTrue(Arrays.stream(response).allMatch(recipe -> recipe.isVegetarian()));
+        assertThat(recipes.stream().filter(Recipe::isVegetarian).count()).isEqualTo(response.length);
+        assertTrue(Arrays.stream(response).allMatch(RecipeResponse::isVegetarian));
     }
 
     @Test
@@ -100,7 +101,7 @@ public class SearchRecipeControllerIT extends AbstractBaseIT {
         RecipeResponse[] response = parseSearchResponse(result.getResponse());
 
         assertThat(recipes.stream().filter(r -> !r.isVegetarian()).count()).isEqualTo(response.length);
-        assertTrue(Arrays.stream(response).noneMatch(r -> r.isVegetarian()));
+        assertTrue(Arrays.stream(response).noneMatch(RecipeResponse::isVegetarian));
     }
 
     @Test
@@ -127,6 +128,7 @@ public class SearchRecipeControllerIT extends AbstractBaseIT {
 
     @Test
     void search_without_ingredient_shouldReturn_recipesWithoutIngredient() throws Exception {
+        //given
         recipeRepository.saveAll(createRecipes(USER_ID));
         var ingredient = "eggs";
         var search = SearchQuery.builder()
@@ -135,14 +137,15 @@ public class SearchRecipeControllerIT extends AbstractBaseIT {
                 .value(ingredient)
                 .build();
         var searchRequest = new SearchRequest(List.of(search));
+        //when
         var result = mvc.perform(createSearchRecipeRequest(USER_ID, objectMapper.writeValueAsString(searchRequest)))
+                //then
                 .andExpect(status().isOk())
                 .andReturn();
 
         RecipeResponse[] response = parseSearchResponse(result.getResponse());
 
-        assertTrue(Arrays.stream(response)
-                .noneMatch(r -> containsIngredient(r.getIngredients(), ingredient)));
+        assertTrue(Arrays.stream(response).noneMatch(r -> containsIngredient(r.getIngredients(), ingredient)));
     }
 
     @Test
@@ -161,6 +164,7 @@ public class SearchRecipeControllerIT extends AbstractBaseIT {
         var searchRequest = new SearchRequest(List.of(containsTextQuery));
         //when
         var result = mvc.perform(createSearchRecipeRequest(USER_ID, objectMapper.writeValueAsString(searchRequest)))
+                //then
                 .andExpect(status().isOk())
                 .andReturn();
 
@@ -186,6 +190,7 @@ public class SearchRecipeControllerIT extends AbstractBaseIT {
         var searchRequest = new SearchRequest(List.of(containsTextQuery));
         //when
         var result = mvc.perform(createSearchRecipeRequest(USER_ID, objectMapper.writeValueAsString(searchRequest)))
+                //then
                 .andExpect(status().isOk())
                 .andReturn();
 
@@ -210,6 +215,7 @@ public class SearchRecipeControllerIT extends AbstractBaseIT {
         var searchRequest = new SearchRequest(List.of(query));
         //when
         var result = mvc.perform(createSearchRecipeRequest(USER_ID, objectMapper.writeValueAsString(searchRequest)))
+                //then
                 .andExpect(status().isOk())
                 .andReturn();
 
@@ -234,6 +240,7 @@ public class SearchRecipeControllerIT extends AbstractBaseIT {
         var searchRequest = new SearchRequest(List.of(query));
         //when
         var result = mvc.perform(createSearchRecipeRequest(USER_ID, objectMapper.writeValueAsString(searchRequest)))
+                //then
                 .andExpect(status().isOk())
                 .andReturn();
 
@@ -258,6 +265,7 @@ public class SearchRecipeControllerIT extends AbstractBaseIT {
         var searchRequest = new SearchRequest(List.of(query));
         //when
         var result = mvc.perform(createSearchRecipeRequest(USER_ID, objectMapper.writeValueAsString(searchRequest)))
+                //then
                 .andExpect(status().isOk())
                 .andReturn();
 
@@ -282,6 +290,7 @@ public class SearchRecipeControllerIT extends AbstractBaseIT {
         var searchRequest = new SearchRequest(List.of(query));
         //when
         var result = mvc.perform(createSearchRecipeRequest(USER_ID, objectMapper.writeValueAsString(searchRequest)))
+                //then
                 .andExpect(status().isOk())
                 .andReturn();
 
@@ -304,7 +313,8 @@ public class SearchRecipeControllerIT extends AbstractBaseIT {
 
         var searchRequest = new SearchRequest(List.of(query));
         //when
-        var result = mvc.perform(createSearchRecipeRequest(USER_ID, objectMapper.writeValueAsString(searchRequest)))
+        mvc.perform(createSearchRecipeRequest(USER_ID, objectMapper.writeValueAsString(searchRequest)))
+                //then
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.code").value(ErrorRule.INVALID_INPUT.name()));
     }
@@ -323,7 +333,8 @@ public class SearchRecipeControllerIT extends AbstractBaseIT {
 
         var searchRequest = new SearchRequest(List.of(query));
         //when
-        var result = mvc.perform(createSearchRecipeRequest(USER_ID, objectMapper.writeValueAsString(searchRequest)))
+        mvc.perform(createSearchRecipeRequest(USER_ID, objectMapper.writeValueAsString(searchRequest)))
+                //then
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.code").value(ErrorRule.INVALID_INPUT.name()));
     }
@@ -369,6 +380,7 @@ public class SearchRecipeControllerIT extends AbstractBaseIT {
         var searchRequest = new SearchRequest(List.of(notEqualQuery));
         //when
         var result = mvc.perform(createSearchRecipeRequest(USER_ID, objectMapper.writeValueAsString(searchRequest)))
+                //then
                 .andExpect(status().isOk())
                 .andReturn();
 
@@ -379,6 +391,7 @@ public class SearchRecipeControllerIT extends AbstractBaseIT {
 
     @Test
     void search_with_MultipleCriteria_should_ReturnRecipes() throws Exception {
+        //given
         recipeRepository.saveAll(createRecipes(USER_ID));
         var ingredient = "salt";
         var descriptionText = "boil";
@@ -402,15 +415,16 @@ public class SearchRecipeControllerIT extends AbstractBaseIT {
                 .build();
 
         var searchRequest = new SearchRequest(List.of(searchDescription, searchIngredients, searchServings));
+        //when
         var result = mvc.perform(createSearchRecipeRequest(USER_ID, objectMapper.writeValueAsString(searchRequest)))
+                //then
                 .andExpect(status().isOk())
                 .andReturn();
 
         RecipeResponse[] response = parseSearchResponse(result.getResponse());
 
-        assertTrue(Arrays.stream(response)
-                .noneMatch(r -> containsIngredient(r.getIngredients(), ingredient)));
-        assertTrue(Arrays.stream(response).allMatch(recipe -> recipe.getServings() > Integer.valueOf(servings)));
+        assertTrue(Arrays.stream(response).noneMatch(r -> containsIngredient(r.getIngredients(), ingredient)));
+        assertTrue(Arrays.stream(response).allMatch(recipe -> recipe.getServings() > Integer.parseInt(servings)));
         assertTrue(Arrays.stream(response).allMatch(recipe -> recipe.getDescription().contains(descriptionText)));
     }
 

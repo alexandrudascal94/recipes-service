@@ -2,28 +2,25 @@ package com.adascal.recipesservice.infrastructure.controller;
 
 import com.adascal.recipesservice.domain.exception.ErrorRule;
 import com.adascal.recipesservice.domain.model.Recipe;
-import com.adascal.recipesservice.infrastructure.dto.Ingredient;
 import com.adascal.recipesservice.infrastructure.dto.RecipeRequest;
 import org.junit.jupiter.api.Test;
 
-import java.time.Duration;
-import java.util.List;
-
-import static com.adascal.recipesservice.factory.RecipeMother.INVALID_USER_ID;
-import static com.adascal.recipesservice.factory.RecipeMother.USER_ID;
-import static com.adascal.recipesservice.factory.RecipeMother.USER_ID_2;
-import static com.adascal.recipesservice.factory.RecipeMother.createRecipe;
-import static com.adascal.recipesservice.factory.TestRequestFactory.createDeleteRecipeRequest;
-import static com.adascal.recipesservice.factory.TestRequestFactory.createGetRecipeRequest;
-import static com.adascal.recipesservice.factory.TestRequestFactory.createPostRecipeRequest;
-import static com.adascal.recipesservice.factory.TestRequestFactory.createPutRecipeRequest;
+import static com.adascal.recipesservice.factory.RecipeObjectMother.INVALID_USER_ID;
+import static com.adascal.recipesservice.factory.RecipeObjectMother.USER_ID;
+import static com.adascal.recipesservice.factory.RecipeObjectMother.USER_ID_2;
+import static com.adascal.recipesservice.factory.RecipeObjectMother.createRecipe;
+import static com.adascal.recipesservice.factory.RecipeObjectMother.createRecipeRequest;
+import static com.adascal.recipesservice.factory.TestRecipeRequestFactory.createDeleteRecipeRequest;
+import static com.adascal.recipesservice.factory.TestRecipeRequestFactory.createGetRecipeRequest;
+import static com.adascal.recipesservice.factory.TestRecipeRequestFactory.createPostRecipeRequest;
+import static com.adascal.recipesservice.factory.TestRecipeRequestFactory.createPutRecipeRequest;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
-public class RecipeControllerIT extends AbstractBaseIT {
+class RecipeControllerIT extends AbstractBaseIT {
 
     @Test
     void get_when_validRecipeAndUserId_should_return200() throws Exception {
@@ -171,7 +168,7 @@ public class RecipeControllerIT extends AbstractBaseIT {
         //when
         mvc.perform(createPutRecipeRequest(INVALID_USER_ID, recipe.getId(), objectMapper.writeValueAsString(createRecipeRequest())))
                 //then
-                .andExpect(status().isForbidden())
+                .andExpect(status().isUnauthorized())
                 .andExpect(jsonPath("$.code").value(ErrorRule.UNAUTHORIZED.name()));
         assertThat(recipeRepository.findAllByUserId(USER_ID).size()).isEqualTo(1);
     }
@@ -179,19 +176,5 @@ public class RecipeControllerIT extends AbstractBaseIT {
 
     private Recipe createAndSaveTestRecipe(String userId) {
         return recipeRepository.save(createRecipe(userId));
-    }
-
-    private RecipeRequest createRecipeRequest() {
-        return RecipeRequest.builder()
-                .servings(3)
-                .title("carbonara")
-                .ingredients(List.of(new Ingredient("Pasta", "kg", 0.3),
-                        new Ingredient("eggs", "pieces", 2),
-                        new Ingredient("pepper", "g", 5),
-                        new Ingredient("bacon", "g", 500)))
-                .description("Boil the pasta, fry the bacon, mix teh egs with parmesan and all together")
-                .isVegetarian(false)
-                .preparationTime(Duration.ofMinutes(25))
-                .build();
     }
 }

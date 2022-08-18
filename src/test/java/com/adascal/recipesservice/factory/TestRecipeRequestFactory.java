@@ -5,7 +5,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-public class TestRequestFactory {
+public class TestRecipeRequestFactory {
 
     private static final String GET_RECIPE_ENDPOINT = "/v1/recipe/";
     private static final String DELETE_RECIPE_ENDPOINT = "/v1/recipe/";

@@ -2,11 +2,12 @@ package com.adascal.recipesservice.factory;
 
 import com.adascal.recipesservice.domain.model.Ingredient;
 import com.adascal.recipesservice.domain.model.Recipe;
+import com.adascal.recipesservice.infrastructure.dto.RecipeRequest;
 
 import java.time.Duration;
 import java.util.List;
 
-public class RecipeMother {
+public class RecipeObjectMother {
 
     public static final String USER_ID = "1";
     public static final String USER_ID_2 = "2";
@@ -75,6 +76,20 @@ public class RecipeMother {
                         new com.adascal.recipesservice.domain.model.Ingredient("eggs", "pieces", 2),
                         new com.adascal.recipesservice.domain.model.Ingredient("pepper", "g", 5),
                         new com.adascal.recipesservice.domain.model.Ingredient("bacon", "g", 500)))
+                .description("boil the pasta, fry the bacon, mix teh egs with parmesan and all together")
+                .isVegetarian(false)
+                .preparationTime(Duration.ofMinutes(25))
+                .build();
+    }
+
+    public static RecipeRequest createRecipeRequest() {
+        return RecipeRequest.builder()
+                .servings(3)
+                .title("carbonara")
+                .ingredients(List.of(new com.adascal.recipesservice.infrastructure.dto.Ingredient("pasta", "kg", 0.3),
+                        new com.adascal.recipesservice.infrastructure.dto.Ingredient("eggs", "pieces", 2),
+                        new com.adascal.recipesservice.infrastructure.dto.Ingredient("pepper", "g", 5),
+                        new com.adascal.recipesservice.infrastructure.dto.Ingredient("bacon", "g", 500)))
                 .description("boil the pasta, fry the bacon, mix teh egs with parmesan and all together")
                 .isVegetarian(false)
                 .preparationTime(Duration.ofMinutes(25))

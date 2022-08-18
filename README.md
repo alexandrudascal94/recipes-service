@@ -1,6 +1,6 @@
 # recipes-service
 
-This service provides APIs for working with user's recipes. The API spec can be found in `api-specs.yml` file. Because of free GitHub free version open the file in local IDE to render it. 
+This service provides a set of APIs for user's recipes. The APIs spec can be found in `api-specs.yml` file. Because of free GitHub version the yaml file is not rendered, open the file in local IDE(InteliJ) to render it. 
 
 The architecture decisions are explained in the `architecture.md` file
 
