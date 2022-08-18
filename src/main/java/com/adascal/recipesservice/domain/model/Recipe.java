@@ -20,8 +20,8 @@ import java.util.List;
 @Document(collection = "recipes")
 public class Recipe {
 
-    @NotNull
     @Id
+    @NotNull
     private String id;
     @NotBlank
     private String userId;

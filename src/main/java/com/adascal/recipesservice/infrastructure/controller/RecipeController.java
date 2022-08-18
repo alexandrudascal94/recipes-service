@@ -9,7 +9,6 @@ import com.adascal.recipesservice.infrastructure.dto.search.SearchRequest;
 import com.adascal.recipesservice.infrastructure.mapper.RecipeMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -76,7 +74,6 @@ public class RecipeController {
     }
 
     @PostMapping(path = "/search")
-    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<RecipeResponse>> search(@RequestHeader(HttpHeaders.AUTHORIZATION) String userId,
                                                        @Valid @RequestBody SearchRequest searchRequest) {
         validateUserId(userId);
@@ -91,7 +88,7 @@ public class RecipeController {
         }
 
         List<RecipeResponse> recipeResponses = recipes.stream()
-                .map(r -> recipeMapper.recipeToRecipeResponse(r))
+                .map(recipeMapper::recipeToRecipeResponse)
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(recipeResponses);
