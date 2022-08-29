@@ -49,9 +49,9 @@
 			<version>${mapstruct.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.payconiq.commons</groupId>
-			<artifactId>testcontainers-mongodb-initializer</artifactId>
-			<version>${testcontainers-mongodb-initializer.version}</version>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>mongodb</artifactId>
+			<version>1.17.3</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>

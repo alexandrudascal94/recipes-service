@@ -1,15 +1,13 @@
 package com.adascal.recipesservice;
 
-import com.payconiq.commons.testcontainer.mongodb.annotation.MongoDBTestContainer;
+import com.adascal.recipesservice.infrastructure.controller.AbstractBaseIT;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-@MongoDBTestContainer
-class RecipesServiceApplicationTests {
+class RecipesServiceApplicationIT extends AbstractBaseIT {
 
 	@Test
 	void contextLoads() {
 	}
-
 }
