@@ -26,7 +26,7 @@ The downsides are when the tests are running in a pipeline it has to create the 
 
 Comparing with unit test, the integration tests the application context is loaded for each test and start a container with MongoDb, which it's time and resource consuming.
 
-Even though this is against some testing principle like Test Pyramid https://martinfowler.com/articles/practical-test-pyramid.html  tests will be added mostly for smaller logics. In the case of this service was not applicable yet. 
+Even though this is against some testing principle like Test Pyramid https://martinfowler.com/articles/practical-test-pyramid.html  Unit tests will be added mostly for smaller logics. In the case of this service was not applicable yet. 
 
 Current tests have coverage of  ~ 95%
 ![img.png](img.png)
