@@ -19,15 +19,14 @@ a correct JWT that will contain all necessary information (AUTHORITIES, SUBJECT,
 
 # Tests 
 The service contains mostly integration tests. Because the integration tests are more resilient to implementation changes in the domain layer(refactorings, adding new features). The interface API remains consistent as it's used by external services.
-With the integration tests it easily possible to cover many test scenarios. In addition to that the user input data DTOs are mapped in the controllers so that the domain don't have any dependency to upper layers and contribute to domain logic resilience.
+With the integration tests it easily possible to cover many test scenarios. 
 
-To test the integration with the database, a test-container with MongoDb is used instead of in-memory mongo database, 
-this will ensure that the service can connect and can communicate with a real database running in a container(as in a real environment). 
-The downsides are when the tests are running in a pipeline it has to create teh containers that will consume memory.  
+For that a test-container with MongoDb is used instead of embedded mongo database, this will ensure that the service can connect and can communicate with a real database running in a container(as in a real environment). 
+The downsides are when the tests are running in a pipeline it has to create the containers that will consume memory.  
 
-The downside of integration tests is that it loads the application context for each test, and it's time-consuming
+Comparing with unit test, the integration tests the application context is loaded for each test and start a container with MongoDb, which it's time and resource consuming.
 
-Unit tests are used mostly for smaller logics. In the case of this service was not applicable yet. 
+Even though this is against some testing principle like Test Pyramid https://martinfowler.com/articles/practical-test-pyramid.html  tests will be added mostly for smaller logics. In the case of this service was not applicable yet. 
 
 Current tests have coverage of  ~ 95%
 ![img.png](img.png)
