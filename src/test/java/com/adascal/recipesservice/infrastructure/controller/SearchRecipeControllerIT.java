@@ -428,8 +428,8 @@ class SearchRecipeControllerIT extends AbstractBaseIT {
         assertTrue(Arrays.stream(response).allMatch(recipe -> recipe.getDescription().contains(descriptionText)));
     }
 
-    private RecipeResponse[] parseSearchResponse(MockHttpServletResponse response2) throws Exception {
-        return objectMapper.readValue(response2.getContentAsString(), RecipeResponse[].class);
+    private RecipeResponse[] parseSearchResponse(MockHttpServletResponse response) throws Exception {
+        return objectMapper.readValue(response.getContentAsString(), RecipeResponse[].class);
     }
 
     private boolean containsIngredient(List<Ingredient> ingredients, String ingredient) {
